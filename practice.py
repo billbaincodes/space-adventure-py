@@ -27,3 +27,4 @@ print("\033[1;37;40m White          \033[0m 1;37;40m            \033[0;37;40m Li
 
 
 print("A sterile room with a table and medical tools. You see a \033[1;33;40m Walkie Talkie")
+print("\033[0;37;40m Default White Text \033[1;31;40m Bright Red \033[0;37;48m")

@@ -40,7 +40,7 @@ def title_screen_selections():
 
 def title_screen():
   os.system('clear')
-  print('#################################')
+  print('\033[0;37m#################################')
   print('#         LOST IN SPACE         #')
   print('#################################')
   print('             * Play *            ')
@@ -89,7 +89,7 @@ zonemap = {
   "b1": {
       ZONENAME: 'Medbay',
       DESCRIPTION: "A bay for medical and healing purposes.",
-      EXAMINATION: "A sterile room with a table and medical tools. You see a \033[1;33;40m Walkie Talkie] on the floor",
+      EXAMINATION: "A sterile room with a table and medical tools. You see a \033[1mWalkie Talkie\033[0;37m on the table.",
       SOLVED: False,
       UP: 'a1',
       DOWN: None,
@@ -128,6 +128,8 @@ def prompt():
     player_move()
   elif action.lower() == 'look':
     player_look()
+  elif action.lower() == 'use':
+    player_use()
   elif action.lower() == 'help':
     player_help()
 
@@ -179,6 +181,10 @@ def player_look():
     print("You have already solved this zone")
   else:
     print(zonemap[myPlayer.location][EXAMINATION])
+
+### Use Command ###
+def player_use():
+  print('use it baby')
 
 ### Help Command ###
 def player_help():
