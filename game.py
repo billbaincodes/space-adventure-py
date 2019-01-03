@@ -51,9 +51,11 @@ def title_screen():
 ###  |a1|a2|
 ###  |b1|b2|
 
-ZONENAME = ""
+ZONENAME = "zonename"
 DESCRIPTION = "description"
 EXAMINATION = "examine"
+ITEM = "item"
+SOLUTION = "solution"
 SOLVED = False
 UP = "up", "north"
 DOWN = "down", "south"
@@ -90,6 +92,8 @@ zonemap = {
       ZONENAME: 'Medbay',
       DESCRIPTION: "A bay for medical and healing purposes.",
       EXAMINATION: "A sterile room with a table and medical tools. You see a \033[1mWalkie Talkie\033[0;37m on the table.",
+      SOLUTION: "Hello...? " + myPlayer.name + "? We're outside cleaning the exterior",
+      ITEM: 'walkie talkie',
       SOLVED: False,
       UP: 'a1',
       DOWN: None,
@@ -184,7 +188,15 @@ def player_look():
 
 ### Use Command ###
 def player_use():
-  print('use it baby')
+  ask = 'What do you want to use? >'
+  desired_item = input(ask)
+  if desired_item.lower() == zonemap[myPlayer.location][ITEM]:
+    print('Sucess!')
+    prompt()
+  else:
+    print('Cant seem to find that...')
+    time.sleep(0.5)
+    prompt()
 
 ### Help Command ###
 def player_help():
@@ -286,3 +298,6 @@ def setup_game():
 
 
 title_screen()
+# main_game_loop()
+
+# print(zonemap)
