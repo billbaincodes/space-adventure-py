@@ -12,16 +12,147 @@ screen_width = 100
 
 ### Player Setup ###$
 class player:
-  def __init__(self):
-    self.name = ''
-    self.job = ''
-    self.hp = 0
-    self.mana = 0
-    self.status_effects = []
-    self.location = 'a1'
-    self.game_over = False
-    
+  def __init__(self, name='initial name', job='initial job', hp=0, mana=0, status_effects=[], location='a1', game_over=False):
+    self.name = name
+    self.job = job
+    self.hp = hp
+    self.mana = mana
+    self.status_effects = status_effects
+    self.location = location
+    self.game_over = game_over
+
 myPlayer = player()
+
+### Puzzles / Solutions ###
+
+def medbay_solution():
+  sent1 = "Hello...?\n"
+  sent2 = myPlayer.name + "??\n"
+  sent3 = "It's Tara, I'm outside the ship replacing our solar panels.\n"
+  sent4 = "Open the hatch to let me in, I set the password to 505!\n"
+
+  os.system('clear')
+  for character in sent1:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.2)
+  for character in sent2:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.01)
+  time.sleep(0.5)
+  for character in sent3:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.05)
+  for character in sent4:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.05)
+  time.sleep(0.5)
+
+def dock_solution():
+  print("what is the password?\n")
+  password = input("> ")
+  if password == "505":
+    sent1 = "Thanks " + myPlayer.name + "!"
+    sent2 = "Hey, where is everybody "
+    sent3 = "It's Tara, I'm outside the ship replacing our solar panels.\n"
+    sent4 = "Open the hatch to let me in, I set the password to 505!\n"
+
+    os.system('clear')
+    for character in sent1:
+      sys.stdout.write(character)
+      sys.stdout.flush()
+      time.sleep(0.2)
+    for character in sent2:
+      sys.stdout.write(character)
+      sys.stdout.flush()
+      time.sleep(0.01)
+    time.sleep(0.5)
+    for character in sent3:
+      sys.stdout.write(character)
+      sys.stdout.flush()
+      time.sleep(0.05)
+    for character in sent4:
+      sys.stdout.write(character)
+      sys.stdout.flush()
+      time.sleep(0.05)
+    time.sleep(0.5)
+  else:
+    print("\033[1;31;40mACCESS DENIED[0;37m")
+
+### Map ###
+###  |a1|a2|
+###  |b1|b2|
+
+ZONENAME = "zonename"
+DESCRIPTION = "description"
+PUZ_EXAMINATION = "puzzle examine"
+SOL_EXAMINATION = 'solved examine'
+ITEM = "item"
+SOLUTION = "solution"
+SOLVED = False
+UP = "up", "north"
+DOWN = "down", "south"
+LEFT = "left", "west"
+RIGHT = "right", "east"
+
+zonemap = {
+  "a1": {
+      ZONENAME: "Cockpit",
+      DESCRIPTION: "The controls to your vessel.",
+      PUZ_EXAMINATION: "Large control panels dominate the room. A window shows stars outside passing by.",
+      SOL_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      SOLUTION: 'pit solution',
+      ITEM: 'pit item',
+      SOLVED: False,
+      UP: None,
+      DOWN: 'b1',
+      LEFT: None,
+      RIGHT: 'a2'
+  },
+  "a2": {
+      ZONENAME: 'Labs',
+      DESCRIPTION: "Onboard research laboratories",
+      PUZ_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      SOL_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      SOLUTION: 'lab solution',
+      ITEM: 'lab item',
+      SOLVED: False,
+      UP: None,
+      DOWN: 'b2',
+      LEFT: 'a1',
+      RIGHT: None
+  },
+  "b1": {
+      ZONENAME: 'Medbay',
+      DESCRIPTION: "A bay for medical and healing purposes.",
+      PUZ_EXAMINATION: "A sterile room with a table and medical tools. You see a \033[1mWalkie Talkie\033[0;37m on the table.",
+      SOL_EXAMINATION: "A sterile room with a table and medical tools. You see an empty table.",
+      SOLUTION: medbay_solution,
+      ITEM: 'walkie talkie',
+      SOLVED: False,
+      UP: 'a1',
+      DOWN: None,
+      LEFT: None,
+      RIGHT: 'b2'
+  },
+  "b2": {
+      ZONENAME: 'Dock',
+      DESCRIPTION: "A dock for the escape pod.",
+      PUZ_EXAMINATION: "An open room with escape pods against the wall and a large \033[1mhatch\033[0;37m to the ship's exterior",
+      SOL_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      SOLUTION: dock_solution,
+      ITEM: 'hatch',
+      SOLVED: False,
+      UP: 'a2',
+      DOWN: None,
+      LEFT: 'b1',
+      RIGHT: None
+  }
+}
+
 
 ### Title Screen ###
 def title_screen_selections():
@@ -31,7 +162,7 @@ def title_screen_selections():
   elif option.lower() == ("quit"):
     sys.exit()
   while option.lower() not in ['play', 'help', 'quit']:
-    print("Please enter a command.")
+    print("Please enter a valid command. (play, quit)`")
     option = input("> ")
     if option.lower() == ("play"):
       setup_game()
@@ -47,71 +178,6 @@ def title_screen():
   print('             * Quit *            ')
   title_screen_selections()
 
-### Map ###
-###  |a1|a2|
-###  |b1|b2|
-
-ZONENAME = "zonename"
-DESCRIPTION = "description"
-EXAMINATION = "examine"
-ITEM = "item"
-SOLUTION = "solution"
-SOLVED = False
-UP = "up", "north"
-DOWN = "down", "south"
-LEFT = "left", "west"
-RIGHT = "right", "east"
-
-solved_places = {
-                "a1" : False, "a2": False,
-                "b1" : False, "b2" : False
-                }
-
-zonemap = {
-  "a1": {
-      ZONENAME: "Cockpit",
-      DESCRIPTION: "The controls to your vessel.",
-      EXAMINATION: "Large control panels dominate the room. A window shows stars outside whizzing by.",
-      SOLVED: False,
-      UP: None,
-      DOWN: 'b1',
-      LEFT: None,
-      RIGHT: 'a2'
-  },
-  "a2": {
-      ZONENAME: 'Labs',
-      DESCRIPTION: "Onboard research laboratories",
-      EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
-      SOLVED: False,
-      UP: None,
-      DOWN: 'b2',
-      LEFT: 'a1',
-      RIGHT: None
-  },
-  "b1": {
-      ZONENAME: 'Medbay',
-      DESCRIPTION: "A bay for medical and healing purposes.",
-      EXAMINATION: "A sterile room with a table and medical tools. You see a \033[1mWalkie Talkie\033[0;37m on the table.",
-      SOLUTION: "Hello...? " + myPlayer.name + "? We're outside cleaning the exterior",
-      ITEM: 'walkie talkie',
-      SOLVED: False,
-      UP: 'a1',
-      DOWN: None,
-      LEFT: None,
-      RIGHT: 'b2'
-  },
-  "b2": {
-      ZONENAME: 'Dock',
-      DESCRIPTION: "A dock for the escape pod.",
-      EXAMINATION: "An empty room. The escape pod is missing!",
-      SOLVED: False,
-      UP: 'a2',
-      DOWN: None,
-      LEFT: 'b1',
-      RIGHT: None
-  }
-}
-
 ### Game Interactivity ###
 def print_location():
   print('\n' + ('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
@@ -122,7 +188,7 @@ def print_location():
 def prompt():
   print("What would you like to do?")
   action = input("> ")
-  acceptable_actions = ['move', 'look', 'quit', 'use', 'help']
+  acceptable_actions = ['move', 'look', 'quit', 'use', 'help', 'status']
   while action.lower() not in acceptable_actions:
     print('Unknown action, try again.')
     action = input("> ")
@@ -132,6 +198,8 @@ def prompt():
     player_move()
   elif action.lower() == 'look':
     player_look()
+  elif action.lower() == 'status':
+    player_status()
   elif action.lower() == 'use':
     player_use()
   elif action.lower() == 'help':
@@ -182,16 +250,22 @@ def movement_handler(destination):
 ### Look Command ###
 def player_look():
   if zonemap[myPlayer.location][SOLVED]:
-    print("You have already solved this zone")
+    print(zonemap[myPlayer.location][SOL_EXAMINATION])
   else:
-    print(zonemap[myPlayer.location][EXAMINATION])
+    print(zonemap[myPlayer.location][PUZ_EXAMINATION])
+
+### Status Command ###
+def player_status():
+  print(myPlayer.name, myPlayer.job, myPlayer.hp, myPlayer.mana)
 
 ### Use Command ###
 def player_use():
-  ask = 'What do you want to use? >'
+  ask = 'What do you want to use?\n> '
   desired_item = input(ask)
   if desired_item.lower() == zonemap[myPlayer.location][ITEM]:
-    print('Sucess!')
+    zonemap[myPlayer.location][SOLVED] = True
+    zonemap[myPlayer.location][SOLUTION]()
+    # SOLUTIONS[myPlayer.location]()
     prompt()
   else:
     print('Cant seem to find that...')
@@ -221,7 +295,7 @@ def setup_game():
     sys.stdout.write(character)
     sys.stdout.flush()
     time.sleep(0.05)
-  player_name = input("> ")
+  player_name= input("> ")
   myPlayer.name = player_name
 
   ### Job Request
@@ -298,6 +372,5 @@ def setup_game():
 
 
 title_screen()
-# main_game_loop()
 
-# print(zonemap)
+# dock_solution()
