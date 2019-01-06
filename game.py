@@ -56,7 +56,7 @@ def dock_solution():
   password = input("> ")
   if password == "505":
     sent1 = "Thanks " + myPlayer.name + "!"
-    sent2 = "Hey, where is everybody "
+    sent2 = "Hey, where is everybody ?"
     sent3 = "It's Tara, I'm outside the ship replacing our solar panels.\n"
     sent4 = "Open the hatch to let me in, I set the password to 505!\n"
 
