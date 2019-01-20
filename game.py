@@ -171,18 +171,18 @@ def title_screen_selections():
 
 def title_screen():
   os.system('clear')
-  print('\033[0;37m#################################')
-  print('#         LOST IN SPACE         #')
-  print('#################################')
+  print('\033[0;37m---------------------------------')
+  print('|         LOST IN SPACE         |')
+  print('---------------------------------')
   print('             * Play *            ')
   print('             * Quit *            ')
   title_screen_selections()
 
 ### Game Interactivity ###
 def print_location():
-  print('\n' + ('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
-  print('# ' + zonemap[myPlayer.location][DESCRIPTION] + ' #')
-  print(('#' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
+  print('\n' + ('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
+  print('- ' + zonemap[myPlayer.location][DESCRIPTION] + ' -')
+  print(('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
 
 ### Main Prompt ###
 def prompt():
@@ -262,7 +262,7 @@ def player_status():
 def player_use():
 
   if zonemap[myPlayer.location][SOLVED]:
-        print('You already solved this room.')
+    print('You already solved this room.')
   else :
     ask = 'What do you want to use?\n> '
     desired_item = input(ask)
@@ -279,7 +279,7 @@ def player_use():
 ### Help Command ###
 def player_help():
   os.system('clear')
-  print("############# H E L P ###############")
+  print("-------------- H E L P --------------")
   print("  Commands: Move, Look, Use, Help    ")
   prompt()
 
@@ -368,9 +368,9 @@ def setup_game():
   time.sleep(0.5)
 
   os.system('clear')
-  print('###############################')
-  print('#          Lets Begin         #')
-  print('###############################')
+  print('-------------------------------')
+  print('|          Lets Begin         |')
+  print('-------------------------------')
   print('Commands: Move, Look, Use, Help\n')
   main_game_loop()
 
