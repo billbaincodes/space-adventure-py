@@ -80,7 +80,7 @@ def dock_solution():
       time.sleep(0.05)
     time.sleep(0.5)
   else:
-    print("\033[1;31;40mACCESS DENIED[0;37m")
+    print("\033[1;31;40mACCESS DENIED\033[0;37m")
 
 ### Map ###
 ###  |a1|a2|
@@ -142,7 +142,7 @@ zonemap = {
       ZONENAME: 'Dock',
       DESCRIPTION: "A dock for the escape pod.",
       PUZ_EXAMINATION: "An open room with escape pods against the wall and a large \033[1mhatch\033[0;37m to the ship's exterior",
-      SOL_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      SOL_EXAMINATION: "An open room with escape pods against the wall. Tara is inspecting broken solar panels on the floor.",
       SOLUTION: dock_solution,
       ITEM: 'hatch',
       SOLVED: False,
@@ -260,17 +260,21 @@ def player_status():
 
 ### Use Command ###
 def player_use():
-  ask = 'What do you want to use?\n> '
-  desired_item = input(ask)
-  if desired_item.lower() == zonemap[myPlayer.location][ITEM]:
-    zonemap[myPlayer.location][SOLVED] = True
-    zonemap[myPlayer.location][SOLUTION]()
-    # SOLUTIONS[myPlayer.location]()
-    prompt()
-  else:
-    print('Cant seem to find that...')
-    time.sleep(0.5)
-    prompt()
+
+  if zonemap[myPlayer.location][SOLVED]:
+        print('You already solved this room.')
+  else :
+    ask = 'What do you want to use?\n> '
+    desired_item = input(ask)
+    if desired_item.lower() == zonemap[myPlayer.location][ITEM]:
+      zonemap[myPlayer.location][SOLVED] = True
+      zonemap[myPlayer.location][SOLUTION]()
+      # SOLUTIONS[myPlayer.location]()
+      prompt()
+    else:
+      print('Cant seem to find that...')
+      time.sleep(0.5)
+      prompt()
 
 ### Help Command ###
 def player_help():
