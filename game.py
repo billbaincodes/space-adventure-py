@@ -368,9 +368,9 @@ def setup_game():
   time.sleep(0.5)
 
   os.system('clear')
-  print('-------------------------------')
-  print('|          Lets Begin         |')
-  print('-------------------------------')
+  print('---------------------------------')
+  print('|            Lets Begin         |')
+  print('---------------------------------')
   print('Commands: Move, Look, Use, Help\n')
   main_game_loop()
 
