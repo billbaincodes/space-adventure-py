@@ -26,58 +26,30 @@ myPlayer = player()
 ### Puzzles / Solutions ###
 
 def medbay_solution():
-  sent1 = "Hello...?\n"
-  sent2 = myPlayer.name + "??\n"
-  sent3 = "It's Tara, I'm outside the ship replacing our solar panels.\n"
-  sent4 = "Open the hatch to let me in, I set the password to 505!\n"
+  statement1 = "Hello...?\n"
+  statement2 = myPlayer.name + "??\n"
+  statement3 = "It's Tara, I'm outside the ship replacing our solar panels.\n"
+  statement4 = "Open the hatch to let me in, I set the password to 505!\n"
 
   os.system('clear')
-  for character in sent1:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.2)
-  for character in sent2:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.01)
-  time.sleep(0.5)
-  for character in sent3:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.05)
-  for character in sent4:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.05)
+  flush_speech(statement1, 0.2)
+  flush_speech(statement2, 0.035)
+  flush_speech(statement3, 0.05)
+  flush_speech(statement4, 0.05)
   time.sleep(0.5)
 
 def dock_solution():
   print("what is the password?\n")
   password = input("> ")
   if password == "505":
-    sent1 = "Thanks " + myPlayer.name + "!"
-    sent2 = "Hey, where is everybody ?"
-    sent3 = "It's Tara, I'm outside the ship replacing our solar panels.\n"
-    sent4 = "Open the hatch to let me in, I set the password to 505!\n"
+    statement1 = "Thanks " + myPlayer.name + "!\n"
+    statement2 = "Hey, where is everybody ?\n"
+    statement3 = "I'd look for Clarence in the lab, but I need to start fixing these!\n"
 
     os.system('clear')
-    for character in sent1:
-      sys.stdout.write(character)
-      sys.stdout.flush()
-      time.sleep(0.05)
-    for character in sent2:
-      sys.stdout.write(character)
-      sys.stdout.flush()
-      time.sleep(0.01)
-    time.sleep(0.5)
-    for character in sent3:
-      sys.stdout.write(character)
-      sys.stdout.flush()
-      time.sleep(0.05)
-    for character in sent4:
-      sys.stdout.write(character)
-      sys.stdout.flush()
-      time.sleep(0.05)
+    flush_speech(statement1, 0.05)
+    flush_speech(statement2, 0.08)
+    flush_speech(statement3, 0.05)
     time.sleep(0.5)
   else:
     print("\033[1;31;40mACCESS DENIED\033[0;37m")
@@ -300,32 +272,26 @@ def flush_speech(statement, speed):
 def setup_game():
   os.system('clear')
 
-  ### Name Request
+  # Setup Questions
   question1 = "Hello, what's your name?\n"
-  for character in question1:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.05)
-  player_name= input("> ")
-  myPlayer.name = player_name
-
-  ### Job Request
   question2 = "What is your job?\n(Scientist, Pilot, Tech)\n"
   question2invalid = "Valid jobs are, Scientist, Pilot and Tech\n"
-  for character in question2:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.05)
+
+  ### Name Request
+  flush_speech(question1, 0.05)
+  player_name= input("> ")
+  myPlayer.name = player_name
+  
+
+  ### Job Request
+  flush_speech(question2, 0.05)
   player_job = input("> ")
   valid_jobs = ['scientist', 'pilot', 'tech']
   if player_job.lower() in valid_jobs:
     myPlayer.job = player_job
     print("You are now a " + player_job + "!\n")
   while myPlayer.job.lower() not in valid_jobs:
-    for character in question2invalid:
-      sys.stdout.write(character)
-      sys.stdout.flush()
-      time.sleep(0.05)
+    flush_speech(question2invalid, 0.05)
     player_job = input("> ")
     if player_job.lower() in valid_jobs:
       myPlayer.job = player_job
@@ -343,43 +309,22 @@ def setup_game():
     self.mp = 50
 
   ### Introduction
-  question3 = "Welcome, " + myPlayer.name + " the " + myPlayer.job + "."
-  for character in question3:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.05)
+  welcome = "Welcome, " + myPlayer.name + " the " + myPlayer.job + "."
+  flush_speech(welcome, 0.05)
   time.sleep(1)
 
-  speech1 = "You awaken in an empty spaceship.\n"
-  speech2 = "The rest of your crew is missing.\n"
-  speech3 = "Try to figure out why...\n"
-  speech4 = "heh. heh.. heh...\n"
+  intro1 = "You awaken in an empty spaceship.\n"
+  intro2 = "The rest of your crew is missing.\n"
+  intro3 = "Try to figure out why...\n"
+  intro4 = "heh. heh.. heh...\n"
 
 
   os.system('clear')
-
-  # for character in speech1:
-  #   sys.stdout.write(character)
-  #   sys.stdout.flush()
-  #   time.sleep(0.04)
-
-  flush_speech(speech1, 0.04)
-
-
-  for character in speech2:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.04)
-
-
-  for character in speech3:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.08)
-  for character in speech4:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.18)
+  
+  flush_speech(intro1, 0.04)
+  flush_speech(intro2, 0.04)
+  flush_speech(intro3, 0.08)
+  flush_speech(intro4, 0.18)
   time.sleep(0.5)
 
   os.system('clear')
