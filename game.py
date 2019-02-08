@@ -64,7 +64,7 @@ def dock_solution():
     for character in sent1:
       sys.stdout.write(character)
       sys.stdout.flush()
-      time.sleep(0.2)
+      time.sleep(0.05)
     for character in sent2:
       sys.stdout.write(character)
       sys.stdout.flush()
@@ -290,6 +290,13 @@ def main_game_loop():
     prompt()
     # Where to handle if game has been beaten.
 
+def flush_speech(statement, speed):
+  for character in statement:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(speed)
+
+
 def setup_game():
   os.system('clear')
 
@@ -348,15 +355,23 @@ def setup_game():
   speech3 = "Try to figure out why...\n"
   speech4 = "heh. heh.. heh...\n"
 
+
   os.system('clear')
-  for character in speech1:
-    sys.stdout.write(character)
-    sys.stdout.flush()
-    time.sleep(0.04)
+
+  # for character in speech1:
+  #   sys.stdout.write(character)
+  #   sys.stdout.flush()
+  #   time.sleep(0.04)
+
+  flush_speech(speech1, 0.04)
+
+
   for character in speech2:
     sys.stdout.write(character)
     sys.stdout.flush()
     time.sleep(0.04)
+
+
   for character in speech3:
     sys.stdout.write(character)
     sys.stdout.flush()
