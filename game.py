@@ -53,6 +53,7 @@ def dock_solution():
     time.sleep(0.5)
   else:
     print("\033[1;31;40mACCESS DENIED\033[0;37m")
+    print(">:(")
 
 ### Map ###
 ###  |a1|a2|
