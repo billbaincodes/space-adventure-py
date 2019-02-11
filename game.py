@@ -23,7 +23,7 @@ class player:
 
 myPlayer = player()
 
-### Puzzles / Solutions ###
+### Puzzle Solutions ###
 
 def medbay_solution():
   statement1 = "Hello...?\n"
@@ -38,6 +38,8 @@ def medbay_solution():
   flush_speech(statement4, 0.05)
   time.sleep(0.5)
 
+  zonemap[myPlayer.location][SOLVED] = True
+
 def dock_solution():
   print("what is the password?\n")
   password = input("> ")
@@ -51,9 +53,25 @@ def dock_solution():
     flush_speech(statement2, 0.08)
     flush_speech(statement3, 0.05)
     time.sleep(0.5)
+    zonemap[myPlayer.location][SOLVED] = True
   else:
     print("\033[1;31;40mACCESS DENIED\033[0;37m")
-    print(">:(")
+
+def lab_solution():
+  print("what is the combination?\n")
+  password = input("> ")
+  if password == "567":
+    statement1 = myPlayer.name + ", it's Clarence, I need you to man the cockpit.\n"
+    statement2 = "There's some harmful radiation in this area we need to avoid\n"
+    statement3 = "Use the thumbscanner to start the warp drive, hurry!\n"
+
+    os.system('clear')
+    flush_speech(statement1, 0.05)
+    flush_speech(statement2, 0.05)
+    flush_speech(statement3, 0.05)
+    time.sleep(0.5)
+  else:
+    print("Can't get it open")
 
 ### Map ###
 ###  |a1|a2|
@@ -128,6 +146,7 @@ zonemap = {
 
 
 ### Title Screen ###
+
 def title_screen_selections():
   option = input("> ")
   if option.lower() == ("play"):
@@ -151,12 +170,6 @@ def title_screen():
   print('             * Quit *            ')
   title_screen_selections()
 
-### Game Interactivity ###
-def print_location():
-  print('\n' + ('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
-  print('- ' + zonemap[myPlayer.location][DESCRIPTION] + ' -')
-  print(('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
-
 ### Main Prompt ###
 def prompt():
   print("What would you like to do?")
@@ -179,6 +192,11 @@ def prompt():
     player_help()
 
 ### Player Movement ###
+def print_location():
+  print('\n' + ('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
+  print('- ' + zonemap[myPlayer.location][DESCRIPTION] + ' -')
+  print(('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
+
 def player_move():
   ask = "Where would you like to move?\n(Up, Left, Down, Right)\n"
   desired_dest = input(ask)
@@ -240,9 +258,7 @@ def player_use():
     ask = 'What do you want to use?\n> '
     desired_item = input(ask)
     if desired_item.lower() == zonemap[myPlayer.location][ITEM]:
-      zonemap[myPlayer.location][SOLVED] = True
       zonemap[myPlayer.location][SOLUTION]()
-      # SOLUTIONS[myPlayer.location]()
       prompt()
     else:
       print('Cant seem to find that...')
@@ -261,7 +277,6 @@ def player_help():
 def main_game_loop():
   while myPlayer.game_over is False:
     prompt()
-    # Where to handle if game has been beaten.
 
 def flush_speech(statement, speed):
   for character in statement:
@@ -283,7 +298,6 @@ def setup_game():
   player_name= input("> ")
   myPlayer.name = player_name
   
-
   ### Job Request
   flush_speech(question2, 0.05)
   player_job = input("> ")
@@ -335,7 +349,5 @@ def setup_game():
   print('Commands: Move, Look, Use, Help\n')
   main_game_loop()
 
-
+### Run Game
 title_screen()
-
-# dock_solution()
