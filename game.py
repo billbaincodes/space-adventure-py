@@ -12,11 +12,12 @@ screen_width = 100
 
 ### Player Setup ###$
 class player:
-  def __init__(self, name='initial name', job='initial job', hp=0, mana=0, status_effects=[], location='a1', game_over=False):
+  def __init__(self, name='initial name', job='initial job', hp=0, mana=0, inventory=[], status_effects=[], location='a1', game_over=False):
     self.name = name
     self.job = job
     self.hp = hp
     self.mana = mana
+    self.inventory = inventory
     self.status_effects = status_effects
     self.location = location
     self.game_over = game_over
@@ -38,7 +39,34 @@ def medbay_solution():
   flush_speech(statement4, 0.05)
   time.sleep(0.5)
 
-  zonemap[myPlayer.location][SOLVED] = True
+  zonemap[myPlayer.location]['solved'] = True
+
+
+def pit_solution():
+  print("Enter Ignition Codes:\n")
+  ignition_codes = input("> ")
+  if ignition_codes == "1234":
+    statement1 = "Ignition sequence initialized.\n"
+    statement2 = "Registering pilot session for Captain " + myPlayer.name + "\n"
+    statement3 = "Entering warp drive in \n"
+    statement4 = "3...\n"
+    statement5 = "2...\n"
+    statement6 = "1...\n"
+
+    os.system('clear')
+    flush_speech(statement1, 0.05)
+    flush_speech(statement2, 0.05)
+    flush_speech(statement3, 0.05)
+    flush_speech(statement4, 0.03)
+    time.sleep(1)
+    flush_speech(statement5, 0.03)
+    time.sleep(1)
+    flush_speech(statement6, 0.03)
+    time.sleep(1)
+    zonemap[myPlayer.location]['solved'] = True
+  else:
+    print("\033[1;31;40m INITIALIZATION FAILURE\033[0;37m")
+
 
 def dock_solution():
   print("what is the password?\n")
@@ -53,7 +81,7 @@ def dock_solution():
     flush_speech(statement2, 0.08)
     flush_speech(statement3, 0.05)
     time.sleep(0.5)
-    zonemap[myPlayer.location][SOLVED] = True
+    zonemap[myPlayer.location]['solved'] = True
   else:
     print("\033[1;31;40mACCESS DENIED\033[0;37m")
 
@@ -77,70 +105,58 @@ def lab_solution():
 ###  |a1|a2|
 ###  |b1|b2|
 
-ZONENAME = "zonename"
-DESCRIPTION = "description"
-PUZ_EXAMINATION = "puzzle examine"
-SOL_EXAMINATION = 'solved examine'
-ITEM = "item"
-SOLUTION = "solution"
-SOLVED = False
-UP = "up", "north"
-DOWN = "down", "south"
-LEFT = "left", "west"
-RIGHT = "right", "east"
-
 zonemap = {
   "a1": {
-      ZONENAME: "Cockpit",
-      DESCRIPTION: "The controls to your vessel.",
-      PUZ_EXAMINATION: "Large control panels dominate the room. A window shows stars outside passing by.",
-      SOL_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
-      SOLUTION: 'pit solution',
-      ITEM: 'pit item',
-      SOLVED: False,
-      UP: None,
-      DOWN: 'b1',
-      LEFT: None,
-      RIGHT: 'a2'
+      "zonename": "Cockpit",
+      "description": "The controls to your vessel.",
+      "puz_examination": "A window shows stars outside passing by. At the helm is a large \033[1mControl Panel\033[0;37m.",
+      "sol_examination": "A window shows stars outside passing by. The Control Panel shows an ignition sequence.",
+      "solution": pit_solution,
+      "item": 'control panel',
+      "solved": False,
+      "up": None,
+      "down": 'b1',
+      "left": None,
+      "right": 'a2'
   },
   "a2": {
-      ZONENAME: 'Labs',
-      DESCRIPTION: "Onboard research laboratories",
-      PUZ_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
-      SOL_EXAMINATION: "A sparse room. Filled with bottles, chemicals and technological equipment.",
-      SOLUTION: 'lab solution',
-      ITEM: 'lab item',
-      SOLVED: False,
-      UP: None,
-      DOWN: 'b2',
-      LEFT: 'a1',
-      RIGHT: None
+      "zonename": 'Labs',
+      "description": "Onboard research laboratories",
+      "puz_examination": "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      "sol_examination": "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      "solution": 'lab solution',
+      "item": 'lab item',
+      "solved": False,
+      "up": None,
+      "down": 'b2',
+      "left": 'a1',
+      "right": None
   },
   "b1": {
-      ZONENAME: 'Medbay',
-      DESCRIPTION: "A bay for medical and healing purposes.",
-      PUZ_EXAMINATION: "A sterile room with a table and medical tools. You see a \033[1mWalkie Talkie\033[0;37m on the table.",
-      SOL_EXAMINATION: "A sterile room with a table and medical tools. You see an empty table.",
-      SOLUTION: medbay_solution,
-      ITEM: 'walkie talkie',
-      SOLVED: False,
-      UP: 'a1',
-      DOWN: None,
-      LEFT: None,
-      RIGHT: 'b2'
+      "zonename": 'Medbay',
+      "description": "A bay for medical and healing purposes.",
+      "puz_examination": "A sterile room with a table and medical tools. You see a \033[1mWalkie Talkie\033[0;37m on the table.",
+      "sol_examination": "A sterile room with a table and medical tools. You see an empty table.",
+      "solution": medbay_solution,
+      "item": 'walkie talkie',
+      "solved": False,
+      "up": 'a1',
+      "down": None,
+      "left": None,
+      "right": 'b2'
   },
   "b2": {
-      ZONENAME: 'Dock',
-      DESCRIPTION: "A dock for the escape pod.",
-      PUZ_EXAMINATION: "An open room with escape pods against the wall and a large \033[1mhatch\033[0;37m to the ship's exterior",
-      SOL_EXAMINATION: "An open room with escape pods against the wall. Tara is inspecting broken solar panels on the floor.",
-      SOLUTION: dock_solution,
-      ITEM: 'hatch',
-      SOLVED: False,
-      UP: 'a2',
-      DOWN: None,
-      LEFT: 'b1',
-      RIGHT: None
+      "zonename": 'Dock',
+      "description": "A dock for the escape pod.",
+      "puz_examination": "An open room with escape pods against the wall and a large \033[1mhatch\033[0;37m to the ship's exterior",
+      "sol_examination": "An open room with escape pods against the wall. Tara is inspecting broken solar panels on the floor.",
+      "solution": dock_solution,
+      "item": 'hatch',
+      "solved": False,
+      "up": 'a2',
+      "down": None,
+      "left": 'b1',
+      "right": None
   }
 }
 
@@ -193,15 +209,15 @@ def prompt():
 
 ### Player Movement ###
 def print_location():
-  print('\n' + ('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
-  print('- ' + zonemap[myPlayer.location][DESCRIPTION] + ' -')
-  print(('-' * (4 + len(zonemap[myPlayer.location][DESCRIPTION]))))
+  print('\n' + ('-' * (4 + len(zonemap[myPlayer.location]["description"]))))
+  print('- ' + zonemap[myPlayer.location]["description"] + ' -')
+  print(('-' * (4 + len(zonemap[myPlayer.location]["description"]))))
 
 def player_move():
   ask = "Where would you like to move?\n(Up, Left, Down, Right)\n"
   desired_dest = input(ask)
   if desired_dest.lower() in ['up', 'north']:
-    destination = zonemap[myPlayer.location][UP]
+    destination = zonemap[myPlayer.location]["up"]
     if destination == None:
       print("There's nothing there.")
       time.sleep(1)
@@ -209,7 +225,7 @@ def player_move():
     else:
       movement_handler(destination)
   elif desired_dest.lower() in ['left', 'west']:
-    destination = zonemap[myPlayer.location][LEFT]
+    destination = zonemap[myPlayer.location]["left"]
     if destination == None:
       print("There's nothing there.")
       time.sleep(1)
@@ -217,7 +233,7 @@ def player_move():
     else:
       movement_handler(destination)
   elif desired_dest.lower() in ['right', 'east']:
-    destination = zonemap[myPlayer.location][RIGHT]
+    destination = zonemap[myPlayer.location]["right"]
     if destination == None:
       print("There's nothing there.")
       time.sleep(1)
@@ -225,7 +241,7 @@ def player_move():
     else:
       movement_handler(destination)
   elif desired_dest.lower() in ['down', 'south']:
-    destination = zonemap[myPlayer.location][DOWN]
+    destination = zonemap[myPlayer.location]["down"]
     if destination == None:
       print("There's nothing there.")
       time.sleep(1)
@@ -234,16 +250,16 @@ def player_move():
       movement_handler(destination)
 
 def movement_handler(destination):
-  print("\n" + "You have moved to " + zonemap[destination][ZONENAME] + ".")
+  print("\n" + "You have moved to " + zonemap[destination]["zonename"] + ".")
   myPlayer.location = destination
   print_location()
 
 ### Look Command ###
 def player_look():
-  if zonemap[myPlayer.location][SOLVED]:
-    print(zonemap[myPlayer.location][SOL_EXAMINATION])
+  if zonemap[myPlayer.location]['solved']:
+    print(zonemap[myPlayer.location]['sol_examination'])
   else:
-    print(zonemap[myPlayer.location][PUZ_EXAMINATION])
+    print(zonemap[myPlayer.location]['puz_examination'])
 
 ### Status Command ###
 def player_status():
@@ -252,13 +268,13 @@ def player_status():
 ### Use Command ###
 def player_use():
 
-  if zonemap[myPlayer.location][SOLVED]:
+  if zonemap[myPlayer.location]["solved"]:
     print('You already solved this room.')
   else :
     ask = 'What do you want to use?\n> '
     desired_item = input(ask)
-    if desired_item.lower() == zonemap[myPlayer.location][ITEM]:
-      zonemap[myPlayer.location][SOLUTION]()
+    if desired_item.lower() == zonemap[myPlayer.location]["item"]:
+      zonemap[myPlayer.location]["solution"]()
       prompt()
     else:
       print('Cant seem to find that...')
