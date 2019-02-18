@@ -88,7 +88,7 @@ def dock_solution():
 def lab_solution():
   print("what is the combination?\n")
   password = input("> ")
-  if password == "567":
+  if password == "456":
     statement1 = myPlayer.name + ", it's Clarence, I need you to man the cockpit.\n"
     statement2 = "There's some harmful radiation in this area we need to avoid\n"
     statement3 = "Use the thumbscanner to start the warp drive, hurry!\n"
