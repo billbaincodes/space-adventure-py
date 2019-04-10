@@ -352,10 +352,10 @@ def setup_game():
 
   os.system('clear')
   
-  flush_speech(intro1, 0.04)
-  flush_speech(intro2, 0.04)
-  flush_speech(intro3, 0.08)
-  flush_speech(intro4, 0.18)
+  flush_speech(intro1, 0.05)
+  flush_speech(intro2, 0.05)
+  flush_speech(intro3, 0.09)
+  flush_speech(intro4, 0.2)
   time.sleep(0.5)
 
   os.system('clear')
