@@ -122,10 +122,10 @@ zonemap = {
   "a2": {
       "zonename": 'Labs',
       "description": "Onboard research laboratories",
-      "puz_examination": "A sparse room. Filled with bottles, chemicals and technological equipment.",
+      "puz_examination": "A sparse room. Filled with bottles, chemicals, \033[1mlocker\033[0;37m and technological equipment.",
       "sol_examination": "A sparse room. Filled with bottles, chemicals and technological equipment.",
-      "solution": 'lab solution',
-      "item": 'lab item',
+      "solution": lab_solution,
+      "item": 'locker',
       "solved": False,
       "up": None,
       "down": 'b2',
